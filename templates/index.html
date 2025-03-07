@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sparrow ChatBot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-header">Sparrow</div>
+        <div id="chat-box"></div>
+        <div id="input-area">
+            <input type="text" id="user-input" placeholder="Ask me" onkeydown="handleKeyPress(event)" />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Handle "Enter" key press
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById("user-input").value;
+            const chatBox = document.getElementById("chat-box");
+
+            if (userInput.trim() === "") return;
+
+            // Display user message
+            chatBox.innerHTML += `<div class='message user-message'><strong>You:</strong> ${userInput}</div>`;
+
+            fetch("/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                chatBox.innerHTML += `<div class='message bot-message'><strong>Me:</strong> ${data.response}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            });
+
+            document.getElementById("user-input").value = "";
+        }
+    </script>
+</body>
+</html>

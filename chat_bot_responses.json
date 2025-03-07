@@ -1,0 +1,7 @@
+{
+    "hello": "Hi there! How can I assist you today?",
+    "how are you": "I'm just a bot, but I'm doing great! How about you?",
+    "bye": "Goodbye! Have a great day!",
+    "who are you": "I'm a simple chatbot built using Flask!",
+    "default": "I'm sorry, I don't understand that. Can you rephrase?"
+}
