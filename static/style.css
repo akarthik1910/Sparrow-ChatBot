@@ -11,12 +11,13 @@ body {
 
 /* Chatbot Container */
 #chat-container {
-    width: 420px;
+    width: 520px;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     padding: 25px;
     box-shadow: inset;
+    height: auto;
 }
 
 /* Header */
@@ -37,6 +38,8 @@ body {
     padding: 12px;
     background: #f9fafb;
     margin-bottom: 10px;
+    font-family: 'Arial';
+    font-size: large;
 }
 
 /* Messages */
@@ -70,6 +73,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 14px;
+    font-family: Arial;
 }
 
 button {
@@ -87,3 +91,12 @@ button {
 button:hover {
     background: #002244;
 }
+
+b, strong {
+    font-weight: bold !important;
+}
+
+
+
+
+

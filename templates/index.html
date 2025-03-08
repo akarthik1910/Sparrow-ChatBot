@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sparrow ChatBot</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
 </head>
 <body>
     <div id="chat-container">
@@ -27,12 +28,15 @@
         function sendMessage() {
             const userInput = document.getElementById("user-input").value;
             const chatBox = document.getElementById("chat-box");
-
+        
             if (userInput.trim() === "") return;
-
+        
             // Display user message
-            chatBox.innerHTML += `<div class='message user-message'><strong>You:</strong> ${userInput}</div>`;
-
+            const userMessage = document.createElement("div");
+            userMessage.className = 'message user-message';
+            userMessage.innerHTML = `<strong>You:</strong> ${userInput}`;
+            chatBox.appendChild(userMessage);
+        
             fetch("/chat", {
                 method: "POST",
                 headers: {
@@ -42,12 +46,17 @@
             })
             .then(response => response.json())
             .then(data => {
-                chatBox.innerHTML += `<div class='message bot-message'><strong>Me:</strong> ${data.response}</div>`;
+                const botMessage = document.createElement("div");
+                botMessage.className = 'message bot-message';
+                botMessage.innerHTML = `<strong>Me:</strong> ${data.response}`; // HTML should render here
+                chatBox.appendChild(botMessage);
+        
                 chatBox.scrollTop = chatBox.scrollHeight;
             });
-
+        
             document.getElementById("user-input").value = "";
         }
+        
     </script>
 </body>
 </html>
