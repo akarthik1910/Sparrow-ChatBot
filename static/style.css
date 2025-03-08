@@ -147,6 +147,7 @@ b, strong {
     #chat-box {
         height: 250px;
         font-size: medium;
+        
     }
 
     #input-area {
@@ -154,7 +155,7 @@ b, strong {
     }
 
     #user-input {
-        width: 100%; /* Full width for input field */
+        width: 90%; /* Full width for input field */
     }
 
     button {
@@ -167,7 +168,8 @@ b, strong {
     }
 
     .top-center-image {
-        width: 100px; /* Smaller logo for mobile */
+        width: 150px; /* Smaller logo for mobile */
+        padding-top: 20px;
     }
     .site-footer {
         text-align: center; /* Center align for mobile */
