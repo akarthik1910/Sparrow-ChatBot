@@ -9,13 +9,22 @@
 </head>
 <body>
     <div id="chat-container">
-        <div id="chat-header">Sparrow</div>
+        <div id="chat-header">SPARROW</div>
         <div id="chat-box"></div>
         <div id="input-area">
             <input type="text" id="user-input" placeholder="Ask me" onkeydown="handleKeyPress(event)" />
             <button onclick="sendMessage()">Send</button>
+            
         </div>
     </div>
+    <footer class="site-footer">
+        <p>Designed by</p> 
+        <p> VN Murthy Amrutavakkula, Income Tax Inspector</p>
+        <p>O/o Dy CIT(HQrs)(Vig), Hyderabad</p>
+    </footer>
+    <img src="{{ url_for('static', filename='images.png') }}" alt="Logo" class="top-center-image">
+
+       
 
     <script>
         // Handle "Enter" key press
