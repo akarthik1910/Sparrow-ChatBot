@@ -169,7 +169,7 @@ b, strong {
 
     .top-center-image {
         width: 150px; /* Smaller logo for mobile */
-        padding-top: 20px;
+        top: 20px;
     }
     .site-footer {
         text-align: center; /* Center align for mobile */
