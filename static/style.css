@@ -167,7 +167,7 @@ b, strong {
     }
 
     .top-center-image {
-        width: 80px; /* Smaller logo for mobile */
+        width: 100px; /* Smaller logo for mobile */
     }
     .site-footer {
         text-align: center; /* Center align for mobile */
