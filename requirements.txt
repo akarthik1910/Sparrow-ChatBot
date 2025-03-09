@@ -35,6 +35,6 @@ tqdm==4.67.1
 tzdata==2025.1
 vispy==0.14.1
 Werkzeug==3.0.1
-python-3.10.12
+python==3.10.12
 fuzzywuzzy
 python-Levenshtein
