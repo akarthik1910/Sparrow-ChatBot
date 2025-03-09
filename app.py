@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import openpyxl
+from fuzzywuzzy import process
 
 app = Flask(__name__)
 
@@ -41,6 +42,12 @@ def remove_articles(sentence):
     filtered_words = [word for word in words if word.lower() not in articles]
     return ' '.join(filtered_words)
 
+def get_best_match(user_message, responses_dict, threshold=80):
+    best_match, score = process.extractOne(user_message, responses_dict.keys())
+    if score >= threshold:
+        return responses_dict[best_match]
+    return responses_dict.get("default", "Sorry, I didn't understand that.")
+
 # Load responses from Excel
 chatbot_responses = load_responses()
 
@@ -55,7 +62,8 @@ def chat():
     user_message = user_message.replace(" ", "")
 
     # Get response from Excel, fallback to "default" if not found
-    response = chatbot_responses.get(user_message, chatbot_responses.get("default", "Sorry, I didn't understand that."))
+    #response = chatbot_responses.get(user_message, chatbot_responses.get("default", "Sorry, I didn't understand that."))
+    response = get_best_match(user_message, chatbot_responses)
     #print(response)  # Debug print to confirm bold tags
     return jsonify({"response": response})
 
