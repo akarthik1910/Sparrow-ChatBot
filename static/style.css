@@ -133,28 +133,7 @@ b, strong {
     
     
 }
-#suggestions {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    background: #ffffff;
-    border: 1px solid #ccc;
-    max-height: 150px;
-    overflow-y: auto;
-    position: absolute;
-    width: 100%;
-    z-index: 1000;
-}
 
-#suggestions li {
-    padding: 10px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-#suggestions li:hover {
-    background: #f0f0f0;
-}
 
 
 /* Mobile-Friendly Styles */
