@@ -40,7 +40,7 @@ body {
     background: #f9fafb;
     margin-bottom: 10px;
     font-family: 'Arial';
-    font-size: large;
+    font-size: medium;
     display: flex;
     flex-direction: column;
     gap: 8px; /* Even spacing between messages */
@@ -176,6 +176,13 @@ b, strong {
         font-size: 12px;
         padding: 5px;
     }
-    
+    #suggestions{
+        position: absolute; /* Helps avoid weird positioning */
+        background: #ffffff;
+        border: 1px solid #ccc;
+        z-index: 1000;
+        width: 100%;
+    }
+
     
 }
