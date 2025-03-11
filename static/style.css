@@ -134,6 +134,8 @@ b, strong {
     
 }
 
+
+
 /* Mobile-Friendly Styles */
 @media screen and (max-width: 600px) {
     #chat-container {

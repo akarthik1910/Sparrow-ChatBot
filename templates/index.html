@@ -20,6 +20,7 @@
     <footer class="site-footer">
         <p>Designed by</p> 
         <p><b>VN Murthy Amrutavakkula, Income Tax Inspector</b></p>
+        <p><b>VN Murthy Amrutavakkula, Income Tax Inspector</b></p>
         <p>O/o Dy CIT(HQrs)(Vig), Hyderabad</p>
     </footer>
     <img src="{{ url_for('static', filename='images.png') }}" alt="Logo" class="top-center-image">
@@ -42,10 +43,28 @@
         function autoSend() {
             const userInput = document.getElementById('user-input').value;
             if (userInput.trim() !== "") {
+        async function getSuggestions() {
+            const query = document.getElementById('user-input').value;
+            if (!query) {
+                document.getElementById('suggestions').innerHTML = '';
+                return;
+            }
+
+            const response = await fetch(`/suggest?q=${query}`);
+            const suggestions = await response.json();
+
+            const suggestionsList = suggestions.map(s => `<option value="${s}"></option>`).join('');
+            document.getElementById('suggestions').innerHTML = suggestionsList;
+        }
+
+        function autoSend() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() !== "") {
                 sendMessage();
             }
         }
 
+        async function sendMessage() {
         async function sendMessage() {
             const userInput = document.getElementById("user-input").value;
             const chatBox = document.getElementById("chat-box");
@@ -56,6 +75,8 @@
             userMessage.className = 'message user-message';
             userMessage.innerHTML = `<strong>You:</strong> ${userInput}`;
             chatBox.appendChild(userMessage);
+
+            const response = await fetch("/chat", {
 
             const response = await fetch("/chat", {
                 method: "POST",
@@ -73,7 +94,18 @@
             chatBox.appendChild(botMessage);
 
             chatBox.scrollTop = chatBox.scrollHeight;
+            });
+
+            const data = await response.json();
+
+            const botMessage = document.createElement("div");
+            botMessage.className = 'message bot-message';
+            botMessage.innerHTML = `<strong>Me:</strong> ${data.response}`;
+            chatBox.appendChild(botMessage);
+
+            chatBox.scrollTop = chatBox.scrollHeight;
             document.getElementById("user-input").value = "";
+            document.getElementById('suggestions').innerHTML = '';
             document.getElementById('suggestions').innerHTML = '';
         }
     </script>
