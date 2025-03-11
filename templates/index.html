@@ -26,6 +26,7 @@
     <img src="{{ url_for('static', filename='images.png') }}" alt="Logo" class="top-center-image">
 
     <script>
+        let lastSentMessage = "";
         async function getSuggestions() {
             const query = document.getElementById('user-input').value;
             if (!query) {
@@ -42,7 +43,7 @@
 
         function autoSend() {
             const userInput = document.getElementById('user-input').value;
-            if (userInput.trim() !== "") {
+            if (userInput.trim() !== "" && userInput !== lastSentMessage) {
                 sendMessage();
             }
         }
@@ -52,6 +53,7 @@
             const chatBox = document.getElementById("chat-box");
 
             if (userInput.trim() === "") return;
+            lastSentMessage= userInput;
 
             const userMessage = document.createElement("div");
             userMessage.className = 'message user-message';
@@ -76,6 +78,7 @@
             chatBox.scrollTop = chatBox.scrollHeight;
             document.getElementById("user-input").value = "";
             document.getElementById('suggestions').innerHTML = '';
+            lastSentMessage = "";
         }
     </script>
 </body>
