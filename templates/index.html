@@ -1,37 +1,81 @@
-from flask import Flask, render_template, request, jsonify
-import pandas as pd
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sparrow ChatBot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images.png') }}" type="image/png">
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-header">SPARROW</div>
+        <div id="chat-box"></div>
+        <div id="input-area">
+            <input type="text" id="user-input" list="suggestions" placeholder="Ask me" oninput="getSuggestions()" onchange="autoSend()" />
+            <datalist id="suggestions"></datalist>
+        </div>
+    </div>
 
-app = Flask(__name__)
+    <footer class="site-footer">
+        <p>Designed by</p> 
+        <p><b>VN Murthy Amrutavakkula, Income Tax Inspector</b></p>
+        <p>O/o Dy CIT(HQrs)(Vig), Hyderabad</p>
+    </footer>
+    <img src="{{ url_for('static', filename='images.png') }}" alt="Logo" class="top-center-image">
 
-# Load chatbot responses from Excel
-def load_responses(file_path='chatbot_responses.xlsx'):
-    df = pd.read_excel(file_path)
-    data = dict(zip(df['Question'].str.strip().str.lower(), df['Response']))
-    return data
+    <script>
+        async function getSuggestions() {
+            const query = document.getElementById('user-input').value;
+            if (!query) {
+                document.getElementById('suggestions').innerHTML = '';
+                return;
+            }
 
-# Load responses from Excel
-chatbot_responses = load_responses()
+            const response = await fetch(`/suggest?q=${query}`);
+            const suggestions = await response.json();
 
-@app.route("/")
-def home():
-    return render_template("index.html")
+            const suggestionsList = suggestions.map(s => `<option value="${s}"></option>`).join('');
+            document.getElementById('suggestions').innerHTML = suggestionsList;
+        }
 
-@app.route("/chat", methods=["POST"])
-def chat():
-    user_message = request.json.get("message", "").lower().strip()
-    response = chatbot_responses.get(user_message, chatbot_responses.get("default", "Sorry, I didn't understand that."))
-    return jsonify({"response": response})
+        function autoSend() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() !== "") {
+                sendMessage();
+            }
+        }
 
-# Suggestion endpoint — exact matches, up to 10 suggestions
-@app.route("/suggest", methods=["GET"])
-def suggest():
-    query = request.args.get("q", "").strip().lower()
-    if not query:
-        return jsonify([])
+        async function sendMessage() {
+            const userInput = document.getElementById("user-input").value;
+            const chatBox = document.getElementById("chat-box");
 
-    # Get up to 10 suggestions where questions start with the query
-    suggestions = [q for q in chatbot_responses.keys() if q.find(query)!=-1]
-    return jsonify(suggestions[:10])
+            if (userInput.trim() === "") return;
 
-if __name__ == "__main__":
-    app.run(debug=True)
+            const userMessage = document.createElement("div");
+            userMessage.className = 'message user-message';
+            userMessage.innerHTML = `<strong>You:</strong> ${userInput}`;
+            chatBox.appendChild(userMessage);
+
+            const response = await fetch("/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: userInput })
+            });
+
+            const data = await response.json();
+
+            const botMessage = document.createElement("div");
+            botMessage.className = 'message bot-message';
+            botMessage.innerHTML = `<strong>Me:</strong> ${data.response}`;
+            chatBox.appendChild(botMessage);
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+            document.getElementById("user-input").value = "";
+            document.getElementById('suggestions').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
