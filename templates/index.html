@@ -45,6 +45,7 @@
             const userInput = document.getElementById('user-input').value;
             if (userInput.trim() !== "" && userInput !== lastSentMessage) {
                 sendMessage();
+                setTimeout(() => messageSent = false, 500);
             }
         }
 
