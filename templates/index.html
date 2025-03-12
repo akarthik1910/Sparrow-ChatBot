@@ -12,7 +12,7 @@
         <div id="chat-header">SPARROW</div>
         <div id="chat-box"></div>
         <div id="input-area">
-            <input type="text" id="user-input" list="suggestions" placeholder="Ask me" oninput="getSuggestions()" onchange="autoSend()" />
+            <input type="text" id="user-input" list="suggestions" placeholder="Ask me" oninput="getSuggestions()" />
             <datalist id="suggestions"></datalist>
             <button onclick="sendMessage()">Send</button>
         </div>
@@ -81,6 +81,15 @@
             document.getElementById('suggestions').innerHTML = '';
             lastSentMessage = "";
         }
+
+        document.getElementById("user-input").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevents form submission or newline in input
+                sendMessage();
+            }
+        });
+
+        
     </script>
 </body>
 </html>
