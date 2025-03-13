@@ -77,6 +77,7 @@ body {
     display: flex;
     flex-direction: row;
     gap: 8px;
+    flex-wrap: nowrap; /* Prevent wrapping on larger screens */
 }
 
 #user-input {
@@ -86,7 +87,10 @@ body {
     border-radius: 8px;
     font-size: 14px;
     font-family: Arial;
-    animation-duration: 5s;
+    min-width: 200px; /* Prevents input from shrinking too much */
+}
+#chat-box {
+    min-height: 250px; /* Prevents excessive shrinking */
 }
 
 button {
@@ -156,11 +160,13 @@ b, strong {
         flex-direction: column; /* Stack input and button on mobile */
     }
 
+
     #user-input {
-        width: 90%; /* Full width for input field */
+        width: 100%; /* Full width for input field */
+        min-width: auto; /* Override min-width for mobile */
     }
 
-    button {
+     button {
         width: 100%; /* Full width for button */
     }
 

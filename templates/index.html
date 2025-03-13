@@ -58,7 +58,7 @@
 
             const userMessage = document.createElement("div");
             userMessage.className = 'message user-message';
-            userMessage.innerHTML = `<strong>You:</strong> ${userInput}`;
+            userMessage.innerHTML = `<strong>ORU:</strong> ${userInput}`;
             chatBox.appendChild(userMessage);
 
             const response = await fetch("/chat", {
@@ -73,7 +73,7 @@
 
             const botMessage = document.createElement("div");
             botMessage.className = 'message bot-message';
-            botMessage.innerHTML = `<strong>Me:</strong> ${data.response}`;
+            botMessage.innerHTML = `<strong><img src="{{ url_for('static', filename='sparrow.png') }}" width="25" height="25">:</strong> ${data.response}`;
             chatBox.appendChild(botMessage);
 
             chatBox.scrollTop = chatBox.scrollHeight;
